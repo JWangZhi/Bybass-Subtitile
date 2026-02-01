@@ -1,4 +1,4 @@
-# Bypass Subtitles (Open Source)
+# Bypass Subtitle
 
 **Bypass Subtitles** is a powerful tool to automatically generate and translate subtitles for any video on the web using AI.
 
