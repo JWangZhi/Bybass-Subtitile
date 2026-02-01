@@ -1,0 +1,50 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+.venv/
+venv/
+ENV/
+*.egg-info/
+dist/
+build/
+
+# uv
+.uv/
+
+# Environment
+.env
+.env.local
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+
+# Model cache (large files)
+*.bin
+*.pt
+*.onnx
+
+# Chrome Extension (development)
+extension/*.crx
+extension/*.pem
+
+# AI Agent config (local only)
+.agents/
+
+CONTRIBUTING.md
+
+# Node
+node_modules/
+npm-debug.log

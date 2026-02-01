@@ -1,0 +1,397 @@
+@import "tailwindcss";
+
+:root {
+  --bg-primary: #050503;
+  --bg-secondary: #0a0a08;
+  --text-primary: #e6e6e2;
+  --text-muted: #888877;
+  --accent: #dcdcc6;
+  --accent-glow: rgba(220, 220, 198, 0.4);
+  --success: #4ade80;
+  --error: #f87171;
+}
+
+@theme inline {
+  --color-background: var(--bg-primary);
+  --color-foreground: var(--text-primary);
+  --font-sans: var(--font-vt323);
+  --font-mono: var(--font-vt323);
+  --font-retro: var(--font-vt323);
+}
+
+html,
+body {
+  overflow: hidden;
+  height: 100%;
+  width: 100%;
+}
+
+body {
+  background: var(--bg-primary);
+  color: var(--text-primary);
+  font-family: var(--font-vt323), monospace;
+  text-shadow: 0 0 6px var(--accent-glow);
+  font-size: 1.5rem;
+  letter-spacing: 0.05em;
+  line-height: 1.2;
+  user-select: none !important;
+  -webkit-user-select: none !important;
+  -moz-user-select: none !important;
+  -ms-user-select: none !important;
+}
+
+/* Strictly disable selection visuals */
+::selection {
+  background: transparent !important;
+  color: inherit !important;
+}
+
+::-moz-selection {
+  background: transparent !important;
+  color: inherit !important;
+}
+
+/* Retro CRT Effects */
+.crt-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  pointer-events: none;
+  z-index: 1000;
+  background:
+    linear-gradient(rgba(18, 16, 10, 0) 50%, rgba(30, 30, 10, 0.15) 50%),
+    linear-gradient(90deg, rgba(255, 255, 0, 0.01), rgba(200, 200, 100, 0.01), rgba(255, 100, 0, 0.01));
+  background-size: 100% 3px, 4px 100%;
+  opacity: 0.4;
+}
+
+.noise-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  pointer-events: none;
+  z-index: 999;
+  opacity: 0.12;
+  background-image: url('data:image/svg+xml;utf8,%3Csvg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg"%3E%3Cfilter id="noiseFilter"%3E%3CfeTurbulence type="fractalNoise" baseFrequency="0.8" numOctaves="4" stitchTiles="stitch"/%3E%3C/filter%3E%3Crect width="100%25" height="100%25" filter="url(%23noiseFilter)"/%3E%3C/svg%3E');
+  animation: noise-shift 0.08s steps(8) infinite;
+  mix-blend-mode: overlay;
+}
+
+@keyframes noise-shift {
+  0% {
+    background-position: 0 0;
+  }
+
+  25% {
+    background-position: -5% -5%;
+  }
+
+  50% {
+    background-position: -10% 5%;
+  }
+
+  75% {
+    background-position: 5% -10%;
+  }
+
+  100% {
+    background-position: 0 0;
+  }
+}
+
+/* Upload Zone */
+.upload-zone {
+  border: 4px dashed var(--accent);
+  background: rgba(10, 10, 5, 0.4);
+  backdrop-filter: blur(12px);
+  transition: all 0.3s ease;
+  border-radius: 2rem;
+}
+
+.upload-zone:hover,
+.upload-zone.dragover {
+  border-color: #fff;
+  box-shadow: 0 0 40px var(--accent-glow);
+  background: rgba(20, 20, 15, 0.6);
+  transform: scale(1.02);
+}
+
+/* Progress Bar */
+.progress-bar {
+  background: rgba(220, 220, 198, 0.2);
+  overflow: hidden;
+  border-radius: 9999px;
+}
+
+.progress-fill {
+  background: linear-gradient(90deg, var(--accent), #fff);
+  box-shadow: 0 0 15px var(--accent-glow);
+  transition: width 0.3s ease;
+}
+
+/* Buttons */
+.btn-primary {
+  background: var(--accent);
+  color: var(--bg-primary);
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  box-shadow: 0 10px 20px -10px var(--accent-glow);
+  border-radius: 1rem;
+}
+
+.btn-primary:hover {
+  box-shadow: 0 15px 30px -10px var(--accent-glow);
+  transform: translateY(-4px);
+  background: #fff;
+}
+
+.btn-primary:active {
+  transform: translateY(-1px);
+}
+
+.btn-primary:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  transform: none;
+}
+
+.btn-secondary {
+  border: 2px solid var(--accent);
+  color: var(--accent);
+  background: transparent;
+  transition: all 0.3s ease;
+  border-radius: 1rem;
+}
+
+.btn-secondary:hover {
+  background: var(--accent);
+  color: var(--bg-primary);
+  box-shadow: 0 0 20px var(--accent-glow);
+}
+
+/* Status indicators */
+.status-success {
+  color: var(--success);
+  text-shadow: 0 0 8px rgba(74, 222, 128, 0.5);
+}
+
+.status-error {
+  color: var(--error);
+  text-shadow: 0 0 8px rgba(248, 113, 113, 0.5);
+}
+
+/* Bento Layout Utilities */
+.bento-grid {
+  display: grid;
+  grid-template-columns: repeat(12, 1fr);
+  grid-auto-rows: 1fr;
+  gap: 1rem;
+}
+
+.bento-box {
+  background: rgba(255, 255, 255, 0.02);
+  border: 1px solid rgba(220, 220, 198, 0.15);
+  border-radius: 2rem;
+  padding: 1.75rem;
+  transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  position: relative;
+  overflow: hidden;
+  backdrop-filter: blur(25px);
+  display: flex;
+  flex-direction: column;
+}
+
+.bento-box:hover {
+  border-color: rgba(220, 220, 198, 0.4);
+  background: rgba(255, 255, 255, 0.04);
+  box-shadow: 0 20px 40px -20px var(--accent-glow);
+  transform: translateY(-2px);
+}
+
+/* Custom size for Action Box */
+.bento-box-action {
+  background: var(--accent);
+  color: var(--bg-primary);
+  border: none;
+}
+
+.bento-box-action:hover {
+  background: #fff;
+  transform: scale(1.02);
+}
+
+/* Upload Zone inside Bento */
+.upload-zone {
+  border: 4px dashed var(--accent);
+  background: transparent;
+  transition: all 0.3s ease;
+  border-radius: 1.5rem;
+  height: 100%;
+}
+
+.upload-zone:hover,
+.upload-zone.dragover {
+  border-color: #fff;
+  background: rgba(220, 220, 198, 0.05);
+}
+
+/* Blink animation */
+.blink {
+  animation: blink 1s step-end infinite;
+}
+
+@keyframes blink {
+
+  0%,
+  100% {
+    opacity: 1;
+  }
+
+  50% {
+    opacity: 0;
+  }
+}
+
+/* Glitch effect */
+.glitch {
+  animation: glitch-anim 0.3s infinite linear alternate-reverse;
+}
+
+@keyframes glitch-anim {
+  0% {
+    transform: translate(0);
+  }
+
+  20% {
+    transform: translate(-2px, 2px);
+  }
+
+  40% {
+    transform: translate(-2px, -2px);
+  }
+
+  60% {
+    transform: translate(2px, 2px);
+  }
+
+  80% {
+    transform: translate(2px, -2px);
+  }
+
+  100% {
+    transform: translate(0);
+  }
+}
+
+/* Upload Zone "Wow" Effects */
+.upload-zone-wow {
+  border: 1px solid rgba(220, 220, 198, 0.1);
+  background: radial-gradient(circle at center, rgba(220, 220, 198, 0.03) 0%, transparent 70%);
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
+  position: relative;
+}
+
+.upload-zone-wow::before {
+  content: '';
+  position: absolute;
+  inset: -2px;
+  background: linear-gradient(90deg, transparent, var(--accent), transparent);
+  opacity: 0;
+  transition: opacity 0.3s;
+  pointer-events: none;
+}
+
+.upload-zone-wow:hover::before {
+  opacity: 0.2;
+}
+
+/* Base box refinement */
+.bento-box {
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(220, 220, 198, 0.15);
+  border-radius: 2rem;
+  padding: 1.75rem;
+  transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  position: relative;
+  overflow: hidden;
+  backdrop-filter: blur(25px);
+  display: flex;
+  flex-direction: column;
+}
+
+/* Tooltip System */
+.has-tooltip {
+  position: relative;
+}
+
+.tooltip-content {
+  position: absolute;
+  left: 0;
+  bottom: 110%;
+  width: 240px;
+  background: #1a1a1a;
+  border: 1px solid var(--accent);
+  padding: 0.75rem;
+  font-size: 0.9rem;
+  color: var(--accent);
+  pointer-events: none;
+  opacity: 0;
+  transform: translateY(10px);
+  transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  z-index: 100;
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.8);
+  line-height: 1.4;
+  font-weight: bold;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  backdrop-filter: blur(10px);
+}
+
+.has-tooltip:hover .tooltip-content {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Adjust for right column */
+/* Tech Loader Styles */
+.tech-loader {
+  position: relative;
+  width: 200px;
+  height: 200px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 2rem;
+}
+
+.loader-ring {
+  position: absolute;
+  border: 4px solid var(--accent);
+  border-radius: 50%;
+  opacity: 0.1;
+  width: 100%;
+  height: 100%;
+}
+
+.loader-core {
+  width: 40px;
+  height: 40px;
+  background: var(--accent);
+  border-radius: 50%;
+  box-shadow: 0 0 30px var(--accent-glow);
+}
+
+.loader-bars {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  border: 4px dashed var(--accent);
+  border-radius: 50%;
+  opacity: 0.3;
+}

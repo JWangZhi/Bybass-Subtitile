@@ -1,0 +1,114 @@
+/**
+ * Subtitle Styles
+ * Overlay positioning, animations, and notifications.
+ */
+
+.bypass-subtitles-container {
+  position: fixed;
+  z-index: 2147483647;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  pointer-events: none;
+  padding: 0 20px;
+}
+
+.bypass-subtitle-text {
+  background: rgba(0, 0, 0, 0.85);
+  color: #ffffff;
+  font-family: 'Segoe UI', 'Roboto', 'Helvetica Neue', Arial, sans-serif;
+  font-size: 1.5em;
+  font-weight: 500;
+  line-height: 1.5;
+  padding: 14px 28px;
+  border-radius: 8px;
+  text-align: center;
+  max-width: 90%;
+  min-width: 60%;
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+  animation: subtitleFadeIn 0.3s ease-out;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+}
+
+.bypass-subtitle-text.fade-out {
+  animation: subtitleFadeOut 0.5s ease-out forwards;
+}
+
+/* Wrapper for dual-line display */
+.bypass-subtitle-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+}
+
+/* Original text (smaller, on top) */
+.bypass-subtitle-original {
+  font-size: 0.85em !important;
+  opacity: 0.8;
+  padding: 8px 16px !important;
+}
+
+/* Translated text (main) */
+.bypass-subtitle-translated {
+  font-size: 1.4em;
+}
+
+@keyframes subtitleFadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes subtitleFadeOut {
+  from {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  to {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+}
+
+.bypass-notification {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  z-index: 2147483647;
+  padding: 12px 20px;
+  border-radius: 8px;
+  font-family: 'Segoe UI', 'Roboto', 'Helvetica Neue', Arial, sans-serif;
+  font-size: 14px;
+  font-weight: 500;
+  color: #ffffff;
+  background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%);
+  box-shadow: 0 4px 12px rgba(99, 102, 241, 0.3);
+  transform: translateX(120%);
+  transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  pointer-events: none;
+}
+
+.bypass-notification.show {
+  transform: translateX(0);
+}
+
+.bypass-notification-error {
+  background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
+  box-shadow: 0 4px 12px rgba(239, 68, 68, 0.3);
+}
+
+.bypass-notification-success {
+  background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+  box-shadow: 0 4px 12px rgba(16, 185, 129, 0.3);
+}
+
+video[data-bypass-subtitles-selected="true"] {
+  outline: 3px solid rgba(99, 102, 241, 0.8) !important;
+  outline-offset: 2px;
+}

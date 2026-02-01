@@ -1,0 +1,533 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Bypass Subtitles</title>
+  <style>
+    :root {
+      /* Cinematic Dark Palette */
+      --bg-primary: #1A1A1B;
+      --bg-secondary: #2F2F30;
+      --bg-hover: #3A3A3B;
+      --text-primary: #FFFFFF;
+      --text-secondary: #B3B3B3;
+      --accent: #E50914;
+      --accent-hover: #F40D17;
+      --success: #22C55E;
+      --border: #404040;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      width: 320px;
+      min-height: 280px;
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      background: var(--bg-primary);
+      color: var(--text-primary);
+      padding: 20px;
+    }
+
+    .header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 20px;
+      padding-bottom: 16px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .logo {
+      width: 28px;
+      height: 28px;
+      border-radius: 4px;
+    }
+
+    .logo img {
+      width: 100%;
+      height: 100%;
+      border-radius: 4px;
+    }
+
+    .title {
+      font-size: 15px;
+      font-weight: 600;
+      letter-spacing: -0.3px;
+    }
+
+    .status-bar {
+      display: flex;
+      gap: 12px;
+    }
+
+    .status-item {
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      font-size: 11px;
+      color: var(--text-secondary);
+    }
+
+    .dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: var(--text-secondary);
+    }
+
+    .dot.active {
+      background: var(--success);
+    }
+
+    .section {
+      background: var(--bg-secondary);
+      border-radius: 8px;
+      padding: 14px;
+      margin-bottom: 12px;
+    }
+
+    .section-label {
+      font-size: 11px;
+      font-weight: 600;
+      color: var(--text-secondary);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      margin-bottom: 10px;
+    }
+
+    .row {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 10px;
+    }
+
+    .row:last-child {
+      margin-bottom: 0;
+    }
+
+    .label {
+      font-size: 13px;
+      color: var(--text-secondary);
+      min-width: 65px;
+    }
+
+    select {
+      flex: 1;
+      padding: 8px 10px;
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      background: var(--bg-primary);
+      color: var(--text-primary);
+      font-size: 13px;
+      cursor: pointer;
+      outline: none;
+      transition: border-color 0.15s;
+    }
+
+    select:hover {
+      border-color: var(--text-secondary);
+    }
+
+    select:focus {
+      border-color: var(--accent);
+    }
+
+    select option {
+      background: var(--bg-primary);
+      color: var(--text-primary);
+    }
+
+    input[type="text"],
+    input[type="password"] {
+      flex: 1;
+      padding: 8px 10px;
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      background: var(--bg-primary);
+      color: var(--text-primary);
+      font-size: 13px;
+      font-family: monospace;
+      outline: none;
+      transition: border-color 0.15s;
+    }
+
+    input:hover {
+      border-color: var(--text-secondary);
+    }
+
+    input:focus {
+      border-color: var(--accent);
+    }
+
+    input::placeholder {
+      color: var(--text-secondary);
+    }
+
+    .checkbox-row {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-top: 10px;
+    }
+
+    .checkbox-row input[type="checkbox"] {
+      width: 14px;
+      height: 14px;
+      accent-color: var(--accent);
+      cursor: pointer;
+    }
+
+    .checkbox-row label {
+      font-size: 12px;
+      color: var(--text-secondary);
+      cursor: pointer;
+    }
+
+    .btn {
+      width: 100%;
+      padding: 12px 16px;
+      border: none;
+      border-radius: 6px;
+      font-size: 14px;
+      font-weight: 500;
+      cursor: pointer;
+      transition: all 0.15s;
+    }
+
+    .btn-primary {
+      background: var(--accent);
+      color: var(--text-primary);
+    }
+
+    .btn-primary:hover {
+      background: var(--accent-hover);
+    }
+
+    .btn-primary:active {
+      transform: scale(0.98);
+    }
+
+    .btn-danger {
+      background: #DC2626;
+      color: var(--text-primary);
+    }
+
+    .btn-danger:hover {
+      background: #EF4444;
+    }
+
+    .btn-secondary {
+      background: transparent;
+      border: 1px solid var(--border);
+      color: var(--text-secondary);
+      font-size: 12px;
+      padding: 8px 12px;
+      margin-top: 8px;
+    }
+
+    .btn-secondary:hover {
+      border-color: var(--text-secondary);
+      color: var(--text-primary);
+    }
+
+    .btn-icon {
+      padding: 8px 10px;
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      background: var(--bg-primary);
+      color: var(--text-secondary);
+      cursor: pointer;
+      transition: all 0.15s;
+      font-size: 11px;
+    }
+
+    .btn-icon:hover {
+      border-color: var(--accent);
+      color: var(--text-primary);
+    }
+
+    .api-key-row {
+      display: flex;
+      gap: 6px;
+    }
+
+    .api-help {
+      margin-top: 8px;
+      font-size: 11px;
+    }
+
+    .api-help a {
+      color: var(--accent);
+      text-decoration: none;
+    }
+
+    .api-help a:hover {
+      text-decoration: underline;
+    }
+
+    .consent-section {
+      margin-top: 8px;
+    }
+
+    .consent-info {
+      margin-top: 8px;
+      font-size: 10px;
+      color: var(--text-secondary);
+      line-height: 1.5;
+    }
+
+    .consent-note {
+      color: var(--success);
+      font-weight: 500;
+    }
+
+    .footer {
+      margin-top: 16px;
+      padding-top: 12px;
+      border-top: 1px solid var(--border);
+      text-align: center;
+      font-size: 11px;
+      color: var(--text-secondary);
+    }
+
+    .footer a {
+      color: var(--text-secondary);
+      text-decoration: none;
+    }
+
+    .footer a:hover {
+      color: var(--text-primary);
+    }
+
+    .hidden {
+      display: none !important;
+    }
+
+    /* Mode Selector Styles */
+    .mode-selector {
+      display: flex;
+      gap: 10px;
+      margin-bottom: 10px;
+    }
+
+    .mode-option {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 12px 8px;
+      background: var(--bg-primary);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      cursor: pointer;
+      position: relative;
+      transition: all 0.2s;
+    }
+
+    .mode-option:hover {
+      border-color: var(--text-secondary);
+    }
+
+    .mode-option.active {
+      border-color: var(--accent);
+      background: rgba(229, 9, 20, 0.1);
+      color: var(--text-primary);
+    }
+
+    .mode-option .icon {
+      font-size: 20px;
+      margin-bottom: 6px;
+    }
+
+    .mode-option .text {
+      font-size: 11px;
+      font-weight: 500;
+    }
+
+    .mode-option.locked {
+      opacity: 0.5;
+      cursor: not-allowed;
+    }
+
+    .mode-option.locked:hover {
+      border-color: var(--border);
+    }
+
+    /* Tooltip */
+    .tooltip {
+      visibility: hidden;
+      width: 140px;
+      background-color: rgba(0, 0, 0, 0.9);
+      color: #fff;
+      text-align: center;
+      border-radius: 4px;
+      padding: 6px 8px;
+      position: absolute;
+      z-index: 10;
+      bottom: 110%;
+      left: 50%;
+      transform: translateX(-50%);
+      opacity: 0;
+      transition: opacity 0.2s;
+      font-size: 10px;
+      pointer-events: none;
+      border: 1px solid var(--border);
+    }
+
+    .tooltip::after {
+      content: "";
+      position: absolute;
+      top: 100%;
+      left: 50%;
+      margin-left: -5px;
+      border-width: 5px;
+      border-style: solid;
+      border-color: rgba(0, 0, 0, 0.9) transparent transparent transparent;
+    }
+
+    .mode-option:hover .tooltip {
+      visibility: visible;
+      opacity: 1;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="header">
+    <div class="brand">
+      <div class="logo"><img src="../icons/icon128.png" alt="Logo"></div>
+      <div class="title">Bypass Subtitles</div>
+    </div>
+    <div class="status-bar">
+      <div class="status-item">
+        <span class="dot" id="video-dot"></span>
+        <span id="video-text">Video</span>
+      </div>
+      <div class="status-item">
+        <span class="dot" id="backend-dot"></span>
+        <span id="backend-text">API</span>
+      </div>
+    </div>
+  </div>
+
+
+  <div class="section">
+    <div class="section-label">Server Mode</div>
+    <div class="mode-selector" id="api-mode">
+      <div class="mode-option active" data-value="trial">
+        <span class="icon">🚀</span>
+        <span class="text">Server</span>
+        <span class="tooltip">Use Local/Self-Hosted Backend</span>
+      </div>
+      <div class="mode-option" data-value="groq">
+        <span class="icon">⚡</span>
+        <span class="text">Groq</span>
+        <span class="tooltip">Use your own Groq API Key</span>
+      </div>
+      <div class="mode-option" data-value="openai">
+        <span class="icon">🤖</span>
+        <span class="text">OpenAI</span>
+        <span class="tooltip">Use your own OpenAI API Key</span>
+      </div>
+    </div>
+
+    <div id="groq-settings" class="hidden">
+      <div class="row">
+        <span class="label">API Key</span>
+        <div class="api-key-row">
+          <input type="password" id="groq-api-key" placeholder="gsk_...">
+          <button class="btn-icon" id="toggle-key-visibility">•••</button>
+        </div>
+      </div>
+      <div class="api-help">
+        <a href="https://console.groq.com/keys" target="_blank">Get Groq Key</a> ·
+        <a href="https://platform.openai.com/api-keys" target="_blank">Get OpenAI Key</a>
+      </div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-label">Language</div>
+    <div class="row">
+      <span class="label">Source</span>
+      <select id="source-lang">
+        <option value="auto">Auto Detect</option>
+        <option value="en">English</option>
+        <option value="vi">Vietnamese</option>
+        <option value="zh">Chinese</option>
+        <option value="ja">Japanese</option>
+        <option value="ko">Korean</option>
+        <option value="fr">French</option>
+        <option value="de">German</option>
+        <option value="es">Spanish</option>
+        <option value="ru">Russian</option>
+        <option value="th">Thai</option>
+      </select>
+    </div>
+    <div class="row">
+      <span class="label">Translate</span>
+      <select id="target-lang">
+        <option value="">None</option>
+        <option value="vi">Vietnamese</option>
+        <option value="en">English</option>
+        <option value="zh">Chinese</option>
+        <option value="ja">Japanese</option>
+        <option value="ko">Korean</option>
+        <option value="fr">French</option>
+        <option value="de">German</option>
+        <option value="es">Spanish</option>
+        <option value="ru">Russian</option>
+        <option value="th">Thai</option>
+      </select>
+    </div>
+    <div class="checkbox-row">
+      <input type="checkbox" id="show-original" checked>
+      <label for="show-original">Show original + translation</label>
+    </div>
+  </div>
+
+  <div class="section consent-section">
+    <div class="checkbox-row">
+      <input type="checkbox" id="data-sync-consent">
+      <label for="data-sync-consent">Help improve subtitles</label>
+    </div>
+    <div class="consent-info">
+      Share anonymous subtitle data to help improve accuracy.
+      <br>
+      <strong>Only from:</strong> YouTube, Bilibili, Vimeo, Twitch
+      <br>
+      <span class="consent-note">Other sites are never collected.</span>
+    </div>
+  </div>
+
+  <button class="btn btn-primary" id="toggle-btn">
+    <span id="toggle-text">Enable Subtitles</span>
+  </button>
+
+  <button id="reload-page-btn" class="btn btn-secondary">
+    Detect Videos
+  </button>
+
+  <div class="footer">
+    <span>Ctrl + Click to select video</span> ·
+    <a href="https://github.com/JWangZhi/Bypass-Subtitles-OSS" target="_blank">GitHub</a>
+  </div>
+
+  <script src="popup.js"></script>
+</body>
+
+</html>
